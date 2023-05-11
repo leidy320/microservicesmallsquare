@@ -17,7 +17,8 @@ public class RestaurantMysqlAdapter implements IRestaurantPersistencePort {
 
 
     @Override
-    public void saveRestaurant(Restaurant restaurant) {
+    public void
+    saveRestaurant(Restaurant restaurant) {
 
         /*if (restaurantRepository.findByNit(restaurant.getNit()).isPresent()) {
             System.out.println("entr el if  y genera error");

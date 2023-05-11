@@ -5,5 +5,5 @@ import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateRestaurantE
 
 
 public interface IRestaurantHandler {
-    void saveRestaurant(RestaurantRequestDto personRequestDto) throws ValidateRestaurantException;
+    void saveRestaurant(RestaurantRequestDto personRequestDto, String token) throws ValidateRestaurantException;
 }
