@@ -34,17 +34,17 @@ To get a local copy up and running follow these steps.
 1. Clone the repository
 2. Change directory
    ```sh
-   cd power-up-arquetipo-v3
+   cd microservicesmallsquare
    ```
-3. Create a new database in MySQL called powerup
+3. Create a new database in MySQL called dbsmallsquare
 4. Update the database connection settings
    ```yml
    # src/main/resources/application-dev.yml
    spring:
       datasource:
-          url: jdbc:mysql://localhost/powerup
+          url: jdbc:mysql://localhost/dbsmallsquare
           username: root
-          password: <your-password>
+          password: 1234
    ```
 5. After the tables are created execute src/main/resources/data.sql content to populate the database
 6. Open Swagger UI and search the /auth/login endpoint and login with userDni: 123, password: 1234
@@ -54,7 +54,8 @@ To get a local copy up and running follow these steps.
 
 1. Right-click the class PowerUpApplication and choose Run
 2. Open [http://localhost:8090/swagger-ui/index.html](http://localhost:8090/swagger-ui/index.html) in your web browser
-
+3. service http://localhost:8010/auth/login login from the user service
+4. service http://localhost:8090/restaurant/ add restaurant
 <!-- ROADMAP -->
 ## Tests
 
