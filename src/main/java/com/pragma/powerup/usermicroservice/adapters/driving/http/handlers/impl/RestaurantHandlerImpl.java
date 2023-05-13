@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class RestaurantHandlerImpl implements IRestaurantHandler {
+    public static final String OWNER = "ROLE_OWNER";
     private final IRestaurantServicePort restaurantServicePort;
     private final IRestaurantRequestMapper restaurantRequestMapper;
     private final IUserRestTemplate userRestTemplate;
@@ -20,8 +21,7 @@ public class RestaurantHandlerImpl implements IRestaurantHandler {
     public void saveRestaurant(RestaurantRequestDto restaurantRequestDto, String token) throws ValidateRestaurantException {
 
         String role = userRestTemplate.getRoleByIdUSer(restaurantRequestDto.getIdOwner(), token);
-        System.out.println("que tienes variable prueba" + role);
-        if(role.equals("ROLE_OWNER")) {
+        if(role.equals(OWNER)) {
             restaurantServicePort.saveRestaurant(restaurantRequestMapper.toRestaurant(restaurantRequestDto));
         }
         else{
