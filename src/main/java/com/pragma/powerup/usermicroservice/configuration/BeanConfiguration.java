@@ -62,7 +62,7 @@ public class BeanConfiguration {
     }
     @Bean
     public IPlatePersistencePort platePersistencePort() {
-        return new PlateMyslqAdapter(plateRepository, plateEntityMapper);
+        return new PlateMyslqAdapter(plateRepository, restaurantRepository,  plateEntityMapper);
     }
     @Bean
     public IRestaurantPersistencePort restaurantPersistencePort() {

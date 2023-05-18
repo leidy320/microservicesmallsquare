@@ -5,6 +5,7 @@ import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.Pla
 import com.pragma.powerup.usermicroservice.adapters.driving.http.handlers.IPlateHandler;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.mapper.IPlateRequestMapper;
 import com.pragma.powerup.usermicroservice.domain.api.IPlateServicePort;
+import com.pragma.powerup.usermicroservice.domain.exceptions.ValidatePlateException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class PlateHandlerImpl implements IPlateHandler {
     private final IPlateRequestMapper plateRequestMapper;
 
     @Override
-    public void savePlate(PlateRequestDto plateRequestDto) {
+    public void savePlate(PlateRequestDto plateRequestDto) throws ValidatePlateException {
         plateServicePort.savePlate(plateRequestMapper.toPlate(plateRequestDto));
     }
 }

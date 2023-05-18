@@ -18,4 +18,6 @@ public class PlateRequestDto {
     @NotBlank
     private String url_image;
     private String active;
+    private Long id_restaurant;
+    private String id_owner;
 }
