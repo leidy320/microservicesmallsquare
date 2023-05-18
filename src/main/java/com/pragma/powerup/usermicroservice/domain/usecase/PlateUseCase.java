@@ -13,7 +13,7 @@ public class PlateUseCase implements IPlateServicePort {
 
     @Override
     public void savePlate(Plate plate) {
-
+        plate.setActive(true);
         platePersistencePort.savePlate(plate);
     }
 }

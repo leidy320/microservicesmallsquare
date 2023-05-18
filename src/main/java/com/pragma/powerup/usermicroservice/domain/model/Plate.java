@@ -5,6 +5,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 public class Plate {
+    private Long id;
     private String name;
     private String id_category;
     private String description;
@@ -12,13 +13,22 @@ public class Plate {
     private String url_image;
     private Boolean active;
 
-    public Plate(String name, String id_category, String description, String price, String url_image, Boolean active) {
+    public Plate(Long id, String name, String id_category, String description, String price, String url_image, Boolean active) {
+        this.id = id;
         this.name = name;
         this.id_category = id_category;
         this.description = description;
         this.price = price;
         this.url_image = url_image;
         this.active = active;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
