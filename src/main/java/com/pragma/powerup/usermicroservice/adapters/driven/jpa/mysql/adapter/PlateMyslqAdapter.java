@@ -9,7 +9,10 @@ import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.repositorie
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidatePlateException;
 import com.pragma.powerup.usermicroservice.domain.model.Plate;
 import com.pragma.powerup.usermicroservice.domain.spi.IPlatePersistencePort;
+import jakarta.xml.bind.ValidationException;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -27,5 +30,15 @@ public class PlateMyslqAdapter implements IPlatePersistencePort {
         PlateEntity plateEntity = plateEntityMapper.toEntity(plate);
         plateEntity.setRestaurant(entityRestaurant);
         plateRepository.save(plateEntity);
+    }
+    public void editPlate(Plate plate) throws ValidatePlateException {
+         Optional<PlateEntity> plateEntityFind = plateRepository.findById(plate.getId());
+
+        if(plateEntityFind.isEmpty()){
+            throw new ValidatePlateException("no se encontro plato con ese id");
+        }
+        plateEntityFind.get().setDescription(plate.getDescription());
+        plateEntityFind.get().setPrice(plate.getPrice());
+        plateRepository.save(plateEntityFind.get());
     }
 }

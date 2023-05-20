@@ -17,4 +17,10 @@ public class PlateUseCase implements IPlateServicePort {
         plate.setActive(true);
         platePersistencePort.savePlate(plate);
     }
+    @Override
+    public void editPlate(Plate plate) throws ValidatePlateException {
+        platePersistencePort.editPlate(plate);
+    }
+
+
 }

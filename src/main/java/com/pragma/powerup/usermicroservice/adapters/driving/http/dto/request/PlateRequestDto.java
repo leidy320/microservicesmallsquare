@@ -14,7 +14,7 @@ public class PlateRequestDto {
     @NotBlank
     private String description;
     @NotBlank
-    private String price;
+    private Double price;
     @NotBlank
     private String url_image;
     private String active;

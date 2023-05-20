@@ -9,13 +9,13 @@ public class Plate {
     private String name;
     private String id_category;
     private String description;
-    private String price;
+    private Double price;
     private String url_image;
     private Boolean active;
     private Long id_restaurant;
     private String id_owner;
 
-    public Plate(Long id, String name, String id_category, String description, String price, String url_image, Boolean active, Long id_restaurant, String id_owner) {
+    public Plate(Long id, String name, String id_category, String description, Double price, String url_image, Boolean active, Long id_restaurant, String id_owner) {
         this.id = id;
         this.name = name;
         this.id_category = id_category;
@@ -59,11 +59,11 @@ public class Plate {
         this.description = description;
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

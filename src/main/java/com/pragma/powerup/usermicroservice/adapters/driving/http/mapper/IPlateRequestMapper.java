@@ -1,5 +1,6 @@
 package com.pragma.powerup.usermicroservice.adapters.driving.http.mapper;
 
+import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.PlateEditRequestDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.PlateRequestDto;
 
 import com.pragma.powerup.usermicroservice.domain.model.Plate;
@@ -11,4 +12,5 @@ import org.mapstruct.ReportingPolicy;
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface IPlateRequestMapper {
     Plate toPlate(PlateRequestDto plateRequestDto);
+    Plate toPlate(PlateEditRequestDto plateEditRequestDto);
 }

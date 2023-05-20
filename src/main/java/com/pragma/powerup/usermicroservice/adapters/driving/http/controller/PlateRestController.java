@@ -1,5 +1,6 @@
 package com.pragma.powerup.usermicroservice.adapters.driving.http.controller;
 
+import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.PlateEditRequestDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.PlateRequestDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.handlers.IPlateHandler;
 import com.pragma.powerup.usermicroservice.configuration.Constants;
@@ -32,10 +33,18 @@ public class PlateRestController {
                             content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Map"))),
                     @ApiResponse(responseCode = "409", description = "Plate already exists",
                             content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))})
-    @PostMapping
+    @PostMapping("create")
     public ResponseEntity<Map<String, String>> savePlate(@RequestBody PlateRequestDto plateRequestDto) throws ValidatePlateException {
         plateHandler.savePlate(plateRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY, Constants.PERSON_CREATED_MESSAGE));
     }
+
+    @PostMapping("edit")
+    public ResponseEntity<Map<String, String>> editPlate(@RequestBody PlateEditRequestDto plateEditRequestDto) throws ValidatePlateException {
+        plateHandler.editPlate(plateEditRequestDto);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY, Constants.PLATE_UPDATE_MESSAGE));
+    }
+
 }

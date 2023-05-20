@@ -19,7 +19,7 @@ public class PlateEntity {
     private String name;
     private String id_category;
     private String description;
-    private String price;
+    private Double price;
     private String url_image;
     private Boolean active;
     @ManyToOne(optional = true)

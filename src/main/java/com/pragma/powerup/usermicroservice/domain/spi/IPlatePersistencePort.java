@@ -6,4 +6,5 @@ import com.pragma.powerup.usermicroservice.domain.model.Plate;
 
 public interface IPlatePersistencePort {
     void savePlate(Plate plate) throws ValidatePlateException;
+    void editPlate(Plate plate) throws ValidatePlateException;
 }
