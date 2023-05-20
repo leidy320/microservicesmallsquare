@@ -33,12 +33,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String token = getToken(req);
         if (token != null && jwtProvider.validateToken(token)) {
-            String nombreUsuario = jwtProvider.getNombreUsuarioFromToken(token);
+            /*String nombreUsuario = jwtProvider.getNombreUsuarioFromToken(token);
             UserDetails userDetails = userDetailsService.loadUserByUsername(nombreUsuario);
 
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null,
                     userDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(auth);
+            SecurityContextHolder.getContext().setAuthentication(auth);*/
         }
         filterChain.doFilter(req, res);
     }

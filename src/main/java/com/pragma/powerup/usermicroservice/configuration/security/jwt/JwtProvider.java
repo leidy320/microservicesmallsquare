@@ -3,7 +3,6 @@ package com.pragma.powerup.usermicroservice.configuration.security.jwt;
 import com.nimbusds.jwt.JWT;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.JWTParser;
-import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.entity.PrincipalUser;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.response.JwtResponseDto;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -33,7 +32,7 @@ public class JwtProvider {
     @Value("${jwt.expiration}")
     private int expiration;
 
-    public String generateToken(Authentication authentication) {
+   /* public String generateToken(Authentication authentication) {
         PrincipalUser usuarioPrincipal = (PrincipalUser) authentication.getPrincipal();
         List<String> roles = usuarioPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
         return Jwts.builder()
@@ -43,7 +42,7 @@ public class JwtProvider {
                 .setExpiration(new Date(new Date().getTime() + expiration * 180))
                 .signWith(SignatureAlgorithm.HS256, secret.getBytes())
                 .compact();
-    }
+    }*/
 
     public String getNombreUsuarioFromToken(String token) {
         return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody().getSubject();
