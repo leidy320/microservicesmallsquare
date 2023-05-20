@@ -20,8 +20,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class MainSecurity {
 
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    //@Autowired
+    //UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     JwtEntryPoint jwtEntryPoint;
@@ -47,7 +47,7 @@ public class MainSecurity {
         http.cors().and().csrf().disable()
                 .authorizeRequests(requests -> requests
                         .requestMatchers("/auth/login", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/actuator/health", "/user/","/restaurant/","/plate/").permitAll()
-                        //.requestMatchers("/user").hasRole("ADMIN")
+                        .requestMatchers("/user").hasRole("OWNER")
                         .anyRequest().authenticated()
                 )
                 .formLogin().disable()
