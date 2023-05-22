@@ -30,17 +30,16 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
+            System.out.println("url"+ request.getRequestURL());
         String token = getToken(request);
-        if (token != null && validateToken(token) && getRoles(token).contains("ROLE_OWNER")) {
-            filterChain.doFilter(request, response);
-        }else{
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "no esta autorizado");
+            validateRolePermissions(request, response, filterChain, token);
         }
-             }
         catch(Exception e){
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
         }
     }
+
+
     private String getToken(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
         if (header != null && header.startsWith("Bearer ")) {
@@ -73,4 +72,19 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         Claims claims = Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
          return claims.get("roles",List.class);
     }
+    private void validateRolePermissions(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, String token) throws IOException, ServletException {
+        String url = request.getRequestURL().toString();
+        if (token != null && validateToken(token) && getRoles(token).contains("ROLE_ADMIN") && url.contains("restaurant")) {
+            filterChain.doFilter(request, response);
+        }
+        else if (token != null && validateToken(token) && getRoles(token).contains("ROLE_OWNER")&& url.contains("plate")) {
+            filterChain.doFilter(request, response);
+        }
+        else {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "no esta autorizado");
+        }
+
+    }
+
+
 }

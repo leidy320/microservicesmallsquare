@@ -37,7 +37,7 @@ public class PlateRestController {
     public ResponseEntity<Map<String, String>> savePlate(@RequestBody PlateRequestDto plateRequestDto) throws ValidatePlateException {
         plateHandler.savePlate(plateRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY, Constants.PERSON_CREATED_MESSAGE));
+                .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY, Constants.PLATE_CREATED_MESSAGE));
     }
 
     @PostMapping("edit")

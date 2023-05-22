@@ -33,4 +33,5 @@ public class Constants {
 
     public  static  final  String PLATE_UPDATE_MESSAGE ="plate update";
     public  static  final  String RESTAURANT_CREATED_MESSAGE ="Restaurant created successfully";
+    public  static  final  String PLATE_CREATED_MESSAGE ="Plate created successfully";
 }
