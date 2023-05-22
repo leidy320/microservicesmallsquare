@@ -33,6 +33,6 @@ public class RestaurantRestController {
        String token = headers.getFirst("authorization");
         restaurantHandler.saveRestaurant(restaurantRequestDto, token);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY, Constants.PERSON_CREATED_MESSAGE));
+                .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY, Constants.RESTAURANT_CREATED_MESSAGE));
     }
 }

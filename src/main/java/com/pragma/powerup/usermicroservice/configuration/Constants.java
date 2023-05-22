@@ -32,4 +32,5 @@ public class Constants {
     public static final String SWAGGER_TERMS_OF_SERVICE_MESSAGE = "http://swagger.io/terms/";
 
     public  static  final  String PLATE_UPDATE_MESSAGE ="plate update";
+    public  static  final  String RESTAURANT_CREATED_MESSAGE ="Restaurant created successfully";
 }

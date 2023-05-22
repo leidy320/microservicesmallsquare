@@ -15,14 +15,13 @@ import com.pragma.powerup.usermicroservice.domain.usecase.RestaurantUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 @Configuration
 @RequiredArgsConstructor
 public class BeanConfiguration {
     private final IRestaurantRepository restaurantRepository;
     private final IRestaurantEntityMapper restaurantEntityMapper;
-    private final PasswordEncoder passwordEncoder;
     private final IPlateRepository plateRepository;
     private final IPlateEntityMapper plateEntityMapper;
 

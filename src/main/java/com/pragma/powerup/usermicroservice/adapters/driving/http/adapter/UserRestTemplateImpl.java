@@ -25,4 +25,9 @@ public class UserRestTemplateImpl implements IUserRestTemplate {
                 .exchange(microserviceUserUrl+"/user/getUser/"+id, HttpMethod.GET,entity, String.class);
         return response.getBody();
     }
+
+    @Override
+    public Object getUserBYDni(String dni) {
+        return null;
+    }
 }
