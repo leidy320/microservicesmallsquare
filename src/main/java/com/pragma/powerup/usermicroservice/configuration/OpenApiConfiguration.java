@@ -32,7 +32,12 @@ public class OpenApiConfiguration {
                         .termsOfService(Constants.SWAGGER_TERMS_OF_SERVICE_MESSAGE))
                         .components(new Components()
                         .addSchemas("Map", mapSchema)
-                        .addSchemas("Error", errorSchema));
+                        .addSchemas("Error", errorSchema)
+
+
+                );
 
     }
+
+
 }

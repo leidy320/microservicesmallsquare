@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,13 +34,14 @@ public class PlateRestController {
                             content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Map"))),
                     @ApiResponse(responseCode = "409", description = "Plate already exists",
                             content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))})
+    @SecurityRequirement(name = "jwt")
     @PostMapping("create")
     public ResponseEntity<Map<String, String>> savePlate(@RequestBody PlateRequestDto plateRequestDto) throws ValidatePlateException {
         plateHandler.savePlate(plateRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY, Constants.PLATE_CREATED_MESSAGE));
     }
-
+    @SecurityRequirement(name = "jwt")
     @PostMapping("edit")
     public ResponseEntity<Map<String, String>> editPlate(@RequestBody PlateEditRequestDto plateEditRequestDto) throws ValidatePlateException {
         plateHandler.editPlate(plateEditRequestDto);
