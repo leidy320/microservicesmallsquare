@@ -10,6 +10,8 @@ public class Constants {
     public static final Long EMPLOYEE_ROLE_ID = 2L;
     public static final Long PROVIDER_ROLE_ID = 3L;
     public static final int MAX_PAGE_SIZE = 2;
+    public static final String OWNER = "ROLE_OWNER";
+    public static final String EMPLOYE = "ROLE_EMPLOYE";
     public static final String RESPONSE_MESSAGE_KEY = "message";
     public static final String PERSON_CREATED_MESSAGE = "Person created successfully";
     public static final String USER_CREATED_MESSAGE = "User created successfully";
@@ -34,4 +36,5 @@ public class Constants {
     public  static  final  String PLATE_UPDATE_MESSAGE ="plate update";
     public  static  final  String RESTAURANT_CREATED_MESSAGE ="Restaurant created successfully";
     public  static  final  String PLATE_CREATED_MESSAGE ="Plate created successfully";
+    public  static  final  String EMPLOYE_ADDRESTAURANT_MESSAGE ="Employe add to restaurant";
 }

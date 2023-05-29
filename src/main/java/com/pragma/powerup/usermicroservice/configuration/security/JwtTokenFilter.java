@@ -6,6 +6,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -15,7 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class JwtTokenFilter extends OncePerRequestFilter {
-
     @Autowired
     private JwtValidate jwtValidate;
     @Autowired
@@ -25,24 +26,18 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        try {
-            String token = getToken(request);
-            if (token == null || !jwtValidate.validateToken(token)) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
-                return;
-            }
-            if (!jwtValidate.validateRole(tokenUtils.getRoles(token), request)) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Role unauthorized for this action");
-                return;
-            }
-            String userId = tokenUtils.getIdFromToken(token);
-            request.setAttribute("userId", userId);
-
-            filterChain.doFilter(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+        String token = getToken(request);
+        if (token == null || !jwtValidate.validateToken(token)) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+            return;
         }
+        if (!jwtValidate.validateRole(tokenUtils.getRoles(token), request)) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Role unauthorized for this action");
+            return;
+        }
+        String userId = tokenUtils.getIdFromToken(token);
+        request.setAttribute("userId", userId);
+        filterChain.doFilter(request, response);
 
     }
 

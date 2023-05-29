@@ -1,4 +1,5 @@
 package com.pragma.powerup.usermicroservice.adapters.driving.http.controller;
+import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.EmployeRestaurantRequestDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.RestaurantRequestDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.handlers.IRestaurantHandler;
 import com.pragma.powerup.usermicroservice.configuration.Constants;
@@ -37,4 +38,13 @@ public class RestaurantRestController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY, Constants.RESTAURANT_CREATED_MESSAGE));
     }
+    @SecurityRequirement(name = "jwt")
+    @PostMapping("addemploye")
+    public ResponseEntity<Map<String, String>> addEmployeToRestaurant(@RequestBody EmployeRestaurantRequestDto employeRestaurantRequestDto, @RequestHeader HttpHeaders headers) throws ValidateRestaurantException {
+        String token = headers.getFirst("authorization");
+        restaurantHandler.addEmployeToRestaurant(employeRestaurantRequestDto, token);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY, Constants.EMPLOYE_ADDRESTAURANT_MESSAGE));
+    }
+
 }

@@ -1,15 +1,19 @@
 package com.pragma.powerup.usermicroservice.domain.usecase;
 
+import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.EmployeRestaurantRequestDto;
 import com.pragma.powerup.usermicroservice.domain.api.IRestaurantServicePort;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateRestaurantException;
 import com.pragma.powerup.usermicroservice.domain.model.Restaurant;
 import com.pragma.powerup.usermicroservice.domain.spi.IRestaurantPersistencePort;
+import com.pragma.powerup.usermicroservice.domain.spi.IUserRestaurantPersistencePort;
 
 public class RestaurantUseCase  implements IRestaurantServicePort {
     private final IRestaurantPersistencePort restaurantPersistencePort;
+    private final IUserRestaurantPersistencePort userRestaurantPersistencePort;
     private final int MAX_CHARACTER = 13;
-    public RestaurantUseCase(IRestaurantPersistencePort restaurantPersistencePort) {
+    public RestaurantUseCase(IRestaurantPersistencePort restaurantPersistencePort, IUserRestaurantPersistencePort userRestaurantPersistencePort) {
         this.restaurantPersistencePort = restaurantPersistencePort;
+        this.userRestaurantPersistencePort = userRestaurantPersistencePort;
     }
 
 
@@ -21,6 +25,12 @@ public class RestaurantUseCase  implements IRestaurantServicePort {
         validateName(restaurant.getName());
         restaurantPersistencePort.saveRestaurant(restaurant);
     }
+
+    @Override
+    public void addEmployeToRestaurant(EmployeRestaurantRequestDto employeRestaurantRequestDto) throws ValidateRestaurantException {
+        userRestaurantPersistencePort.addEmployeToRestaurant(employeRestaurantRequestDto);
+    }
+
     protected void validateNit(String nit) throws ValidateRestaurantException {
         if(nit.matches(".*[a-zA-Z]+.*")) {
             throw new ValidateRestaurantException("El Campo nit  solo acepta numeros");
