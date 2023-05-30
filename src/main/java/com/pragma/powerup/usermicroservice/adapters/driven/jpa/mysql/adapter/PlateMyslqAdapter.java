@@ -41,4 +41,19 @@ public class PlateMyslqAdapter implements IPlatePersistencePort {
         plateEntityFind.get().setPrice(plate.getPrice());
         plateRepository.save(plateEntityFind.get());
     }
+
+    @Override
+    public void editStatusPlate(Plate plate) throws ValidatePlateException {
+        Optional<PlateEntity> plateEntityFind = plateRepository.findById(plate.getId());
+        if(plateEntityFind.isEmpty()){
+            throw new ValidatePlateException("no se encontro plato con ese id");
+        }
+        RestaurantEntity entityRestaurant = restaurantRepository.findByIdAndIdOwner(plateEntityFind.get().getRestaurant().getId(), plate.getId_owner());
+
+        if(entityRestaurant==null) {
+            throw new ValidatePlateException("No existe un restaurante asociado a ese id de propietario");
+        }
+        plateEntityFind.get().setActive(plate.getActive());
+        plateRepository.save(plateEntityFind.get());
+    }
 }

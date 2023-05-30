@@ -1,5 +1,6 @@
 package com.pragma.powerup.usermicroservice.adapters.driving.http.controller;
 
+import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.EnableDisablePlateRequestDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.PlateEditRequestDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.PlateRequestDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.handlers.IPlateHandler;
@@ -45,6 +46,13 @@ public class PlateRestController {
     @PostMapping("edit")
     public ResponseEntity<Map<String, String>> editPlate(@RequestBody PlateEditRequestDto plateEditRequestDto) throws ValidatePlateException {
         plateHandler.editPlate(plateEditRequestDto);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY, Constants.PLATE_UPDATE_MESSAGE));
+    }
+    @SecurityRequirement(name = "jwt")
+    @PostMapping("enabledisable")
+    public ResponseEntity<Map<String, String>> enabledisablePlate(@RequestBody EnableDisablePlateRequestDto enableDisablePlateRequestDto) throws ValidatePlateException {
+        plateHandler.editStatusPlate(enableDisablePlateRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY, Constants.PLATE_UPDATE_MESSAGE));
     }

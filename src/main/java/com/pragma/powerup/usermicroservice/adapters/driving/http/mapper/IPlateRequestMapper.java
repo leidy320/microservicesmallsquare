@@ -1,5 +1,6 @@
 package com.pragma.powerup.usermicroservice.adapters.driving.http.mapper;
 
+import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.EnableDisablePlateRequestDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.PlateEditRequestDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.PlateRequestDto;
 
@@ -13,4 +14,5 @@ import org.mapstruct.ReportingPolicy;
 public interface IPlateRequestMapper {
     Plate toPlate(PlateRequestDto plateRequestDto);
     Plate toPlate(PlateEditRequestDto plateEditRequestDto);
+    Plate toPlate(EnableDisablePlateRequestDto enableDisablePlateRequestDto);
 }
