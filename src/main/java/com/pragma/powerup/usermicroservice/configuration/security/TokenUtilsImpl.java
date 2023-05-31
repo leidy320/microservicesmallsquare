@@ -15,16 +15,25 @@ public class TokenUtilsImpl implements ITokenUtils {
     @Value("${jwt.secret}")
     private String secret;
     private AntPathMatcher pathMatcher = new AntPathMatcher();
+
     @Override
     public String getIdFromToken(String token) {
         SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes());
         Claims claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
         return (String) claims.get("sub");
     }
+
     @Override
     public List<String> getRoles(String token) {
         SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes());
         Claims claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
         return (List<String>) claims.get("roles");
+    }
+
+    @Override
+    public String getIdByToken(String token) {
+        SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes());
+        Claims claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token.substring(7)).getBody();
+        return claims.get("id").toString();
     }
 }

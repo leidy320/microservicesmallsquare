@@ -17,6 +17,8 @@ public class UserRestaurantEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private Long idUser;
+    @Column(unique = true)
     private Long idRestaurant;
 }

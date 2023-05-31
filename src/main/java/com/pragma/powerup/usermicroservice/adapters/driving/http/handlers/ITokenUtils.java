@@ -4,5 +4,6 @@ import java.util.List;
 
 public interface ITokenUtils {
     String getIdFromToken(String token);
-    public List<String> getRoles(String token);
+    List<String> getRoles(String token);
+    String getIdByToken(String token);
 }

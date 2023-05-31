@@ -2,6 +2,9 @@ package com.pragma.powerup.usermicroservice.configuration.security;
 
 
 import com.pragma.powerup.usermicroservice.adapters.driving.http.handlers.ITokenUtils;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -60,5 +64,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         }
         return null;
     }
+
 
 }
