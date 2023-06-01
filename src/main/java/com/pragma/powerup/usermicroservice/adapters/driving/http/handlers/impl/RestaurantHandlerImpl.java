@@ -40,7 +40,7 @@ public class RestaurantHandlerImpl implements IRestaurantHandler {
     public void addEmployeToRestaurant(EmployeRestaurantRequestDto employeRestaurantRequestDto, String token) throws ValidateRestaurantException {
         String idUSer = tokenUtils.getIdByToken(token);
         employeRestaurantRequestDto.setIdOwner(Long.valueOf(idUSer));
-        String role = userRestTemplate.getRoleByIdUSer(employeRestaurantRequestDto.getIdUser().toString(), token);
+        String role = userRestTemplate.getRoleByIdUSer(employeRestaurantRequestDto.getIdOwner().toString(), token);
         if(role.equals(Constants.EMPLOYE)) {
             restaurantServicePort.addEmployeToRestaurant(employeRestaurantRequestDto);
         }

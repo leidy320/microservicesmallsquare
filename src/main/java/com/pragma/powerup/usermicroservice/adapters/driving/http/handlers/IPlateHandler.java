@@ -9,5 +9,5 @@ import com.pragma.powerup.usermicroservice.domain.exceptions.ValidatePlateExcept
 public interface IPlateHandler {
     void savePlate(PlateRequestDto plateRequestDto) throws ValidatePlateException;
     void editPlate(PlateEditRequestDto plateEditRequestDto) throws ValidatePlateException;
-    void editStatusPlate(EnableDisablePlateRequestDto enableDisablePlateRequestDto) throws ValidatePlateException;
+    void editStatusPlate(EnableDisablePlateRequestDto enableDisablePlateRequestDto, String token) throws ValidatePlateException;
 }

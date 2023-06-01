@@ -24,6 +24,7 @@ public class RestaurantUseCase  implements IRestaurantServicePort {
         validateNit(restaurant.getNit());
         validateName(restaurant.getName());
         restaurantPersistencePort.saveRestaurant(restaurant);
+
     }
 
     @Override
