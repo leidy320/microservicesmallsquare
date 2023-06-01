@@ -4,6 +4,7 @@ import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.Res
 import com.pragma.powerup.usermicroservice.adapters.driving.http.handlers.IRestaurantHandler;
 import com.pragma.powerup.usermicroservice.configuration.Constants;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateRestaurantException;
+import com.pragma.powerup.usermicroservice.domain.model.Restaurant;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -39,12 +41,19 @@ public class RestaurantRestController {
                 .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY, Constants.RESTAURANT_CREATED_MESSAGE));
     }
     @SecurityRequirement(name = "jwt")
-    @PostMapping("addemploye")
+    @PostMapping("Employe")
     public ResponseEntity<Map<String, String>> addEmployeToRestaurant(@RequestBody EmployeRestaurantRequestDto employeRestaurantRequestDto, @RequestHeader HttpHeaders headers) throws ValidateRestaurantException {
         String token = headers.getFirst("authorization");
         restaurantHandler.addEmployeToRestaurant(employeRestaurantRequestDto, token);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY, Constants.EMPLOYE_ADDRESTAURANT_MESSAGE));
+    }
+    @SecurityRequirement(name = "jwt")
+    @GetMapping("list")
+    public ResponseEntity<List<Restaurant>> listRestaurant(@RequestParam(name = "page") int page, @RequestParam(name = "pageSize") int pageSize) throws ValidateRestaurantException {
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(restaurantHandler.getRestaurant(page, pageSize));
     }
 
 }

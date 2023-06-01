@@ -31,6 +31,7 @@ public class BeanConfiguration {
     private final IUserRestaurantRepository userRestaurantRepository;
     private final IUserRestaurantEntityMapper userRestaurantEntityMapper;
 
+
     @Bean
     public IRestaurantServicePort restaurantServicePort(){return new RestaurantUseCase(restaurantPersistencePort(), userRestaurantPersistencePort());
     }
@@ -48,6 +49,6 @@ public class BeanConfiguration {
     }
     @Bean
     public IUserRestaurantPersistencePort userRestaurantPersistencePort() {
-        return new UserRestaurantMysqlAdapter(userRestaurantRepository, userRestaurantEntityMapper, restaurantRepository);
+        return new UserRestaurantMysqlAdapter(userRestaurantRepository, userRestaurantEntityMapper, restaurantRepository, restaurantEntityMapper);
     }
 }

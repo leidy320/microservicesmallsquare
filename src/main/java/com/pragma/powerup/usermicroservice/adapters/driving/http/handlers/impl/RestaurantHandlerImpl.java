@@ -11,9 +11,12 @@ import com.pragma.powerup.usermicroservice.configuration.security.TokenUtilsImpl
 import com.pragma.powerup.usermicroservice.domain.api.IRestaurantServicePort;
 import com.pragma.powerup.usermicroservice.domain.apirest.IUserRestTemplate;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateRestaurantException;
+import com.pragma.powerup.usermicroservice.domain.model.Restaurant;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.apache.bcel.classfile.ConstantString;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -48,6 +51,11 @@ public class RestaurantHandlerImpl implements IRestaurantHandler {
             throw new ValidateRestaurantException("El usuario con este id no existe");
 
         }
+    }
+
+    @Override
+    public List<Restaurant> getRestaurant(int page, int pageSize) {
+      return  restaurantServicePort.getRestaurant(page, pageSize);
     }
 
 
