@@ -9,5 +9,5 @@ import java.util.List;
 public interface IRestaurantServicePort {
     void saveRestaurant(Restaurant restaurant) throws ValidateRestaurantException;
     void addEmployeToRestaurant(EmployeRestaurantRequestDto employeRestaurantRequestDto) throws ValidateRestaurantException;
-    List<Restaurant> getRestaurant(int page, int pageSize);
+    List<Restaurant> getRestaurant(int page, int pageSize) throws ValidateRestaurantException;
 }

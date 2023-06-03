@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface IUserRestaurantPersistencePort {
     void addEmployeToRestaurant(EmployeRestaurantRequestDto employeRestaurantRequestDto) throws ValidateRestaurantException;
-    List<Restaurant> getRestaurant(PageRequest pageRequest);
+
 
 }

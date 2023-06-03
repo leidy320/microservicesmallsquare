@@ -6,8 +6,7 @@ import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateRestaurantE
 import com.pragma.powerup.usermicroservice.domain.model.Restaurant;
 import com.pragma.powerup.usermicroservice.domain.spi.IRestaurantPersistencePort;
 import com.pragma.powerup.usermicroservice.domain.spi.IUserRestaurantPersistencePort;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+
 
 import java.util.List;
 
@@ -19,8 +18,6 @@ public class RestaurantUseCase  implements IRestaurantServicePort {
         this.restaurantPersistencePort = restaurantPersistencePort;
         this.userRestaurantPersistencePort = userRestaurantPersistencePort;
     }
-
-
 
     @Override
     public void saveRestaurant(Restaurant restaurant) throws ValidateRestaurantException {
@@ -37,9 +34,9 @@ public class RestaurantUseCase  implements IRestaurantServicePort {
     }
 
     @Override
-    public List<Restaurant> getRestaurant(int page, int pageSize) {
-        PageRequest pageRequest =PageRequest.of(page, pageSize);
-        return userRestaurantPersistencePort.getRestaurant(pageRequest);
+    public List<Restaurant> getRestaurant(int page, int pageSize) throws ValidateRestaurantException {
+
+        return restaurantPersistencePort.getRestaurant(page, pageSize);
     }
 
     protected void validateNit(String nit) throws ValidateRestaurantException {
