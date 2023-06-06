@@ -1,21 +1,28 @@
 package com.pragma.powerup.usermicroservice.domain.usecase;
 
 import com.pragma.powerup.usermicroservice.domain.api.IPlateServicePort;
+import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateCategoryException;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidatePlateException;
+import com.pragma.powerup.usermicroservice.domain.model.Category;
 import com.pragma.powerup.usermicroservice.domain.model.Plate;
+import com.pragma.powerup.usermicroservice.domain.spi.ICategoryPersistencePort;
 import com.pragma.powerup.usermicroservice.domain.spi.IPlatePersistencePort;
 
 public class PlateUseCase implements IPlateServicePort {
     private final IPlatePersistencePort platePersistencePort;
+    private final ICategoryPersistencePort categoryPersistencePort;
 
-    public PlateUseCase(IPlatePersistencePort platePersistencePort) {
+
+    public PlateUseCase(IPlatePersistencePort platePersistencePort, ICategoryPersistencePort categoryPersistencePort) {
         this.platePersistencePort = platePersistencePort;
+        this.categoryPersistencePort = categoryPersistencePort;
     }
 
     @Override
-    public void savePlate(Plate plate) throws ValidatePlateException {
+    public void savePlate(Plate plate) throws ValidatePlateException, ValidateCategoryException {
+        Category category = categoryPersistencePort.findById(plate.getId_category());
         plate.setActive(true);
-        platePersistencePort.savePlate(plate);
+        platePersistencePort.savePlate(plate, category);
     }
     @Override
     public void editPlate(Plate plate) throws ValidatePlateException {

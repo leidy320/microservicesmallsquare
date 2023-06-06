@@ -27,7 +27,8 @@ VALUES
   );
 
 
-INSERT INTO `role` (`id`, `description`, `name`) VALUES ('1', 'ROLE_ADMIN', 'ROLE_ADMIN');
-INSERT INTO `role` (`id`, `description`, `name`) VALUES ('2', 'ROLE_USER', 'ROLE_USER');
 
-INSERT INTO `user` (`id_person`, `id_role`) VALUES ('1', '1');
+use dbsmallsquare
+INSERT INTO `category` (`id`, `description`, `name`) VALUES ('1', 'ESPAGUETIS', 'ESPAGUETIS');
+INSERT INTO `category` (`id`, `description`, `name`) VALUES ('2', 'HAMBURGUESAS', 'HAMBURGUESAS');
+

@@ -26,7 +26,7 @@ public class UserRestaurantMysqlAdapter implements IUserRestaurantPersistencePor
     @Override
     public void addEmployeToRestaurant(EmployeRestaurantRequestDto employeRestaurantRequestDto) throws ValidateRestaurantException {
         var restaurantentity = restaurantRepository.findByIdAndIdOwner(employeRestaurantRequestDto.getIdRestaurant(),
-                employeRestaurantRequestDto.getIdOwner().toString());
+                employeRestaurantRequestDto.getIdOwner());
 
         if (restaurantentity == null) {
             throw new ValidateRestaurantException("No existe un restaurante asociado a ese id de propietario");

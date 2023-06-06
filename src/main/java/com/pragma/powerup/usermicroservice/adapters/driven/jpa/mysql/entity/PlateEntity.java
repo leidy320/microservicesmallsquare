@@ -17,7 +17,6 @@ public class PlateEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String id_category;
     private String description;
     private Double price;
     private String url_image;
@@ -25,4 +24,7 @@ public class PlateEntity {
     @ManyToOne(optional = true)
     @JoinColumn(name = "id_restaurant")
     private RestaurantEntity restaurant;
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "id_category")
+    private CategoryEntity category;
 }

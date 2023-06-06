@@ -1,5 +1,6 @@
 package com.pragma.powerup.usermicroservice.domain.model;
 
+import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.entity.CategoryEntity;
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.entity.RestaurantEntity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -7,23 +8,28 @@ import jakarta.persistence.ManyToOne;
 public class Plate {
     private Long id;
     private String name;
-    private String id_category;
     private String description;
     private Double price;
     private String url_image;
     private Boolean active;
+    private Restaurant restaurant;
     private Long id_restaurant;
-    private String id_owner;
+    private Category category;
+    private Long id_category;
+    private Long id_owner;
 
-    public Plate(Long id, String name, String id_category, String description, Double price, String url_image, Boolean active, Long id_restaurant, String id_owner) {
+    public Plate(Long id, String name, String description, Double price, String url_image, Boolean active,
+            Restaurant restaurant, Long id_restaurant, Category category, Long id_category, Long id_owner) {
         this.id = id;
         this.name = name;
-        this.id_category = id_category;
         this.description = description;
         this.price = price;
         this.url_image = url_image;
         this.active = active;
+        this.restaurant = restaurant;
         this.id_restaurant = id_restaurant;
+        this.category = category;
+        this.id_category = id_category;
         this.id_owner = id_owner;
     }
 
@@ -41,14 +47,6 @@ public class Plate {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getId_category() {
-        return id_category;
-    }
-
-    public void setId_category(String id_category) {
-        this.id_category = id_category;
     }
 
     public String getDescription() {
@@ -83,6 +81,14 @@ public class Plate {
         this.active = active;
     }
 
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
     public Long getId_restaurant() {
         return id_restaurant;
     }
@@ -91,11 +97,27 @@ public class Plate {
         this.id_restaurant = id_restaurant;
     }
 
-    public String getId_owner() {
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Long getId_category() {
+        return id_category;
+    }
+
+    public void setId_category(Long id_category) {
+        this.id_category = id_category;
+    }
+
+    public Long getId_owner() {
         return id_owner;
     }
 
-    public void setId_owner(String id_owner) {
+    public void setId_owner(Long id_owner) {
         this.id_owner = id_owner;
     }
 }

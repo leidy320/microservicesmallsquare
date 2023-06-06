@@ -10,6 +10,7 @@ import com.pragma.powerup.usermicroservice.adapters.driving.http.mapper.IPlateRe
 import com.pragma.powerup.usermicroservice.configuration.Constants;
 import com.pragma.powerup.usermicroservice.domain.api.IPlateServicePort;
 import com.pragma.powerup.usermicroservice.domain.apirest.IUserRestTemplate;
+import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateCategoryException;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidatePlateException;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateRestaurantException;
 import com.pragma.powerup.usermicroservice.domain.model.Plate;
@@ -24,7 +25,7 @@ public class PlateHandlerImpl implements IPlateHandler {
     private final IUserRestTemplate userRestTemplate;
     private final ITokenUtils tokenUtils;
     @Override
-    public void savePlate(PlateRequestDto plateRequestDto) throws ValidatePlateException {
+    public void savePlate(PlateRequestDto plateRequestDto) throws ValidatePlateException, ValidateCategoryException {
         plateServicePort.savePlate(plateRequestMapper.toPlate(plateRequestDto));
     }
     @Override
