@@ -9,12 +9,17 @@ import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.repositorie
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.repositories.IRestaurantRepository;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.mapper.ICategoryRequestMapper;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidatePlateException;
+import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateRestaurantException;
 import com.pragma.powerup.usermicroservice.domain.model.Category;
 import com.pragma.powerup.usermicroservice.domain.model.Plate;
 import com.pragma.powerup.usermicroservice.domain.spi.IPlatePersistencePort;
 import jakarta.xml.bind.ValidationException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -66,5 +71,18 @@ public class PlateMyslqAdapter implements IPlatePersistencePort {
         }
         plateEntityFind.get().setActive(plate.getActive());
         plateRepository.save(plateEntityFind.get());
+    }
+
+    @Override
+    public List<Plate> getPlate(int page, int pageSize, Long idCategory) throws ValidatePlateException {
+         Sort sort= org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.ASC,"name");
+        Pageable pageable = PageRequest.of(page,pageSize,sort);
+
+
+        List<PlateEntity> plateEntities = plateRepository.findAll(pageable).toList();
+        if(plateEntities.isEmpty()){
+            throw  new ValidatePlateException("No se encontro  restaurantes");
+        }
+        return plateEntityMapper.toListPlate(plateEntities);
     }
 }

@@ -4,6 +4,7 @@ import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.Ena
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.PlateEditRequestDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.PlateRequestDto;
 
+import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.response.ListPlateResponseDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.handlers.IPlateHandler;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.handlers.ITokenUtils;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.mapper.IPlateRequestMapper;
@@ -16,6 +17,8 @@ import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateRestaurantE
 import com.pragma.powerup.usermicroservice.domain.model.Plate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +50,23 @@ public class PlateHandlerImpl implements IPlateHandler {
 
         }
 
+    }
+
+    @Override
+    public List<ListPlateResponseDto> getPlate(int page, int pageSize, Long idCategory) throws ValidatePlateException, ValidateCategoryException {
+        List<Plate> platelist = plateServicePort.getPlate(page, pageSize, idCategory);
+        List<ListPlateResponseDto> listPlateResponseDto = plateRequestMapper.toListPlateResponseDto( platelist);
+        int index=0;
+
+        for(ListPlateResponseDto plate : listPlateResponseDto){
+
+            plate.setId_restaurant(platelist.get(index).getRestaurant().getId());
+            plate.setId_owner(platelist.get(index).getRestaurant().getIdOwner());
+            index++;
+
+        }
+
+        return  listPlateResponseDto;
     }
 
 }

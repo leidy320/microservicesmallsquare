@@ -22,7 +22,7 @@ public class JwtValidate {
         rolePermissions = new HashMap<>();
         rolePermissions.put("ROLE_ADMIN", Arrays.asList("/restaurant/add"));
         rolePermissions.put("ROLE_OWNER", Arrays.asList("/plate/**","/restaurant/addemploye"));
-        rolePermissions.put("ROLE_CUSTOMER", Arrays.asList("/restaurant/list"));
+        rolePermissions.put("ROLE_CUSTOMER", Arrays.asList("/restaurant/list","/plate/list"));
     }
 
     public boolean validateToken(String token) {

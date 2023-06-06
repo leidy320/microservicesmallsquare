@@ -8,6 +8,8 @@ import com.pragma.powerup.usermicroservice.domain.model.Plate;
 import com.pragma.powerup.usermicroservice.domain.spi.ICategoryPersistencePort;
 import com.pragma.powerup.usermicroservice.domain.spi.IPlatePersistencePort;
 
+import java.util.List;
+
 public class PlateUseCase implements IPlateServicePort {
     private final IPlatePersistencePort platePersistencePort;
     private final ICategoryPersistencePort categoryPersistencePort;
@@ -32,6 +34,12 @@ public class PlateUseCase implements IPlateServicePort {
     @Override
     public void editStatusPlate(Plate plate) throws ValidatePlateException {
         platePersistencePort.editStatusPlate(plate);
+    }
+
+    @Override
+    public List<Plate> getPlate(int page, int pageSize, Long idCategory) throws ValidatePlateException, ValidateCategoryException {
+        categoryPersistencePort.findById(idCategory);
+        return platePersistencePort.getPlate(page, pageSize, idCategory);
     }
 
 
