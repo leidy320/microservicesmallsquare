@@ -13,13 +13,12 @@ public class Plate {
     private String url_image;
     private Boolean active;
     private Restaurant restaurant;
-    private Long id_restaurant;
     private Category category;
-    private Long id_category;
+
     private Long id_owner;
 
     public Plate(Long id, String name, String description, Double price, String url_image, Boolean active,
-            Restaurant restaurant, Long id_restaurant, Category category, Long id_category, Long id_owner) {
+            Restaurant restaurant, Category category, Long id_owner) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -27,9 +26,7 @@ public class Plate {
         this.url_image = url_image;
         this.active = active;
         this.restaurant = restaurant;
-        this.id_restaurant = id_restaurant;
         this.category = category;
-        this.id_category = id_category;
         this.id_owner = id_owner;
     }
 
@@ -89,13 +86,6 @@ public class Plate {
         this.restaurant = restaurant;
     }
 
-    public Long getId_restaurant() {
-        return id_restaurant;
-    }
-
-    public void setId_restaurant(Long id_restaurant) {
-        this.id_restaurant = id_restaurant;
-    }
 
     public Category getCategory() {
         return category;
@@ -103,14 +93,6 @@ public class Plate {
 
     public void setCategory(Category category) {
         this.category = category;
-    }
-
-    public Long getId_category() {
-        return id_category;
-    }
-
-    public void setId_category(Long id_category) {
-        this.id_category = id_category;
     }
 
     public Long getId_owner() {

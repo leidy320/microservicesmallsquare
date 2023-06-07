@@ -4,10 +4,13 @@ import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.entity.Plat
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-
+@Repository
 public interface IPlateRepository extends JpaRepository<PlateEntity, Long> {
     Optional<PlateEntity> findById(Long id);
-    //Page<PlateEntity> findAllByIdCategory(Long idCategory, Pageable pageable);
+    Page<PlateEntity> findByCategoryId(Long idCategory, Pageable pageable);
+
 }
+

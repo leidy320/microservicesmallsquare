@@ -33,7 +33,7 @@ public class PlateMyslqAdapter implements IPlatePersistencePort {
 
     @Override
     public void savePlate(Plate plate, Category category) throws ValidatePlateException {
-        RestaurantEntity entityRestaurant = restaurantRepository.findByIdAndIdOwner(plate.getId_restaurant(), plate.getId_owner());
+        RestaurantEntity entityRestaurant = restaurantRepository.findByIdAndIdOwner(plate.getRestaurant().getId(), plate.getId_owner());
 
         if(entityRestaurant==null) {
             throw new ValidatePlateException("No existe un restaurante asociado a ese id de propietario");
@@ -79,7 +79,7 @@ public class PlateMyslqAdapter implements IPlatePersistencePort {
         Pageable pageable = PageRequest.of(page,pageSize,sort);
 
 
-        List<PlateEntity> plateEntities = plateRepository.findAll(pageable).toList();
+        List<PlateEntity> plateEntities = plateRepository.findByCategoryId(idCategory, pageable).toList();
         if(plateEntities.isEmpty()){
             throw  new ValidatePlateException("No se encontro  restaurantes");
         }

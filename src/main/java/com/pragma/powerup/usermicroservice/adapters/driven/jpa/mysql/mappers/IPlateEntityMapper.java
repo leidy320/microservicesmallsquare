@@ -5,6 +5,7 @@ import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.entity.Rest
 import com.pragma.powerup.usermicroservice.domain.model.Plate;
 import com.pragma.powerup.usermicroservice.domain.model.Restaurant;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
@@ -13,7 +14,12 @@ import java.util.List;
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface IPlateEntityMapper {
+    @Mapping(target = "category.id", source = "category.id")
+    @Mapping(target = "restaurant.id", source = "restaurant.id")
     PlateEntity toEntity(Plate plate);
+    @Mapping(target = "category.id", source = "category.id")
+    @Mapping(target = "restaurant.id", source = "restaurant.id")
+    Plate toPlate(PlateEntity plateEntity);
     List<Plate> toListPlate(List<PlateEntity> Plates);
 }
 

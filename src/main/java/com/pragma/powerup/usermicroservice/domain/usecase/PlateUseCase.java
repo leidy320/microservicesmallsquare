@@ -22,7 +22,7 @@ public class PlateUseCase implements IPlateServicePort {
 
     @Override
     public void savePlate(Plate plate) throws ValidatePlateException, ValidateCategoryException {
-        Category category = categoryPersistencePort.findById(plate.getId_category());
+        Category category = categoryPersistencePort.findById(plate.getCategory().getId());
         plate.setActive(true);
         platePersistencePort.savePlate(plate, category);
     }

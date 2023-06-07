@@ -4,10 +4,9 @@ import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.Ena
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.PlateEditRequestDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.PlateRequestDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.response.ListPlateResponseDto;
-import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.response.ListRestaurantResponseDto;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateCategoryException;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidatePlateException;
-import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateRestaurantException;
+
 
 import java.util.List;
 
