@@ -13,5 +13,5 @@ public interface IPlateServicePort {
     void savePlate(Plate plate) throws ValidatePlateException, ValidateCategoryException;
     void editPlate(Plate plate) throws ValidatePlateException;
     void editStatusPlate(Plate plate) throws ValidatePlateException;
-    List<Plate> getPlate(int page, int pageSize, Long idCategory) throws ValidatePlateException, ValidateCategoryException;
+    List<Plate> getPlate(int page, int pageSize, Long idCategory, Long idRestaurant) throws ValidatePlateException, ValidateCategoryException;
 }

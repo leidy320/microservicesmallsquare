@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,11 +63,12 @@ public class PlateRestController {
     }
     @SecurityRequirement(name = "jwt")
     @GetMapping("list")
-    public ResponseEntity<List<ListPlateResponseDto>> lisPlate (@RequestParam(name = "page") int page,
+    public ResponseEntity<List<ListPlateResponseDto>> lisPlate (@RequestParam (name = "idrestaurant") Long idRestaurant,
+                                                                @RequestParam(name = "page") int page,
                                                                 @RequestParam(name = "pageSize") int pageSize,
                                                                 @RequestParam(name = "category") Long idCategory) throws ValidatePlateException, ValidateCategoryException {
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(plateHandler.getPlate(page, pageSize, idCategory));
+                .body(plateHandler.getPlate(page, pageSize, idCategory, idRestaurant));
     }
 }

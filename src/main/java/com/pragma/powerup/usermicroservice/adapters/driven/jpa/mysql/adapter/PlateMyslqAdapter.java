@@ -74,14 +74,14 @@ public class PlateMyslqAdapter implements IPlatePersistencePort {
     }
 
     @Override
-    public List<Plate> getPlate(int page, int pageSize, Long idCategory) throws ValidatePlateException {
+    public List<Plate> getPlate(int page, int pageSize, Long idCategory, Long idRestaurant) throws ValidatePlateException {
          Sort sort= org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.ASC,"name");
         Pageable pageable = PageRequest.of(page,pageSize,sort);
 
 
-        List<PlateEntity> plateEntities = plateRepository.findByCategoryId(idCategory, pageable).toList();
+        List<PlateEntity> plateEntities = plateRepository.findByCategoryIdAndRestaurantIdAndActiveTrue(idCategory,idRestaurant, pageable).toList();
         if(plateEntities.isEmpty()){
-            throw  new ValidatePlateException("No se encontro  restaurantes");
+            throw  new ValidatePlateException("No se encontro  plato  asociado a restaurante o categoria o no esta activo");
         }
         return plateEntityMapper.toListPlate(plateEntities);
     }

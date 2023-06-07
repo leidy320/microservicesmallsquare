@@ -10,7 +10,7 @@ public class PlateRequestDto {
     @NotBlank
     private String name;
     @NotBlank
-    private String id_category;
+    private Long id_category;
     @NotBlank
     private String description;
     @NotBlank

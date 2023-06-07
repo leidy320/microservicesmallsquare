@@ -9,6 +9,7 @@ import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.response.Li
 import com.pragma.powerup.usermicroservice.domain.model.Plate;
 import com.pragma.powerup.usermicroservice.domain.model.Restaurant;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
@@ -17,6 +18,8 @@ import java.util.List;
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface IPlateRequestMapper {
+    @Mapping(target = "category.id", source = "id_category")
+    @Mapping(target = "restaurant.id", source = "id_restaurant")
     Plate toPlate(PlateRequestDto plateRequestDto);
     Plate toPlate(PlateEditRequestDto plateEditRequestDto);
     Plate toPlate(EnableDisablePlateRequestDto enableDisablePlateRequestDto);

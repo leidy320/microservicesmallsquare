@@ -102,4 +102,19 @@ public class Plate {
     public void setId_owner(Long id_owner) {
         this.id_owner = id_owner;
     }
+
+    @Override
+    public String toString() {
+        return "Plate{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", url_image='" + url_image + '\'' +
+                ", active=" + active +
+                ", restaurant=" + restaurant +
+                ", category=" + category +
+                ", id_owner=" + id_owner +
+                '}';
+    }
 }

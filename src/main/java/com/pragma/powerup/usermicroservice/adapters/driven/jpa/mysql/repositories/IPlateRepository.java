@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface IPlateRepository extends JpaRepository<PlateEntity, Long> {
     Optional<PlateEntity> findById(Long id);
-    Page<PlateEntity> findByCategoryId(Long idCategory, Pageable pageable);
+    Page<PlateEntity> findByCategoryIdAndRestaurantIdAndActiveTrue(Long idCategory, Long idRestaurant, Pageable pageable);
 
 }
 

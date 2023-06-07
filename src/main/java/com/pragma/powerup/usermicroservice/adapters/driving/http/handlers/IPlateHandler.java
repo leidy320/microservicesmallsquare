@@ -15,5 +15,5 @@ public interface IPlateHandler {
     void savePlate(PlateRequestDto plateRequestDto) throws ValidatePlateException, ValidateCategoryException;
     void editPlate(PlateEditRequestDto plateEditRequestDto) throws ValidatePlateException;
     void editStatusPlate(EnableDisablePlateRequestDto enableDisablePlateRequestDto, String token) throws ValidatePlateException;
-    List<ListPlateResponseDto> getPlate(int page, int pagesize, Long idCategory) throws ValidatePlateException, ValidateCategoryException;
+    List<ListPlateResponseDto> getPlate(int page, int pagesize, Long idCategory, Long idRestaurant) throws ValidatePlateException, ValidateCategoryException;
 }

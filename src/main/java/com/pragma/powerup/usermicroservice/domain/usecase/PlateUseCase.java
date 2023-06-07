@@ -37,9 +37,9 @@ public class PlateUseCase implements IPlateServicePort {
     }
 
     @Override
-    public List<Plate> getPlate(int page, int pageSize, Long idCategory) throws ValidatePlateException, ValidateCategoryException {
+    public List<Plate> getPlate(int page, int pageSize, Long idCategory, Long idRestaurant) throws ValidatePlateException, ValidateCategoryException {
         categoryPersistencePort.findById(idCategory);
-        return platePersistencePort.getPlate(page, pageSize, idCategory);
+        return platePersistencePort.getPlate(page, pageSize, idCategory, idRestaurant);
     }
 
 

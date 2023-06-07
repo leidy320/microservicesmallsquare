@@ -53,16 +53,19 @@ public class PlateHandlerImpl implements IPlateHandler {
     }
 
     @Override
-    public List<ListPlateResponseDto> getPlate(int page, int pageSize, Long idCategory) throws ValidatePlateException, ValidateCategoryException {
-        List<Plate> platelist = plateServicePort.getPlate(page, pageSize, idCategory);
+    public List<ListPlateResponseDto> getPlate(int page, int pageSize, Long idCategory, Long idRestaurant) throws ValidatePlateException, ValidateCategoryException {
+        List<Plate> platelist = plateServicePort.getPlate(page, pageSize, idCategory, idRestaurant);
         List<ListPlateResponseDto> listPlateResponseDto = plateRequestMapper.toListPlateResponseDto( platelist);
         int index=0;
+
 
         for(ListPlateResponseDto plate : listPlateResponseDto){
 
             plate.setId_restaurant(platelist.get(index).getRestaurant().getId());
             plate.setId_owner(platelist.get(index).getRestaurant().getIdOwner());
+            plate.setId_category(platelist.get(index).getCategory().getId());
             index++;
+
 
         }
 

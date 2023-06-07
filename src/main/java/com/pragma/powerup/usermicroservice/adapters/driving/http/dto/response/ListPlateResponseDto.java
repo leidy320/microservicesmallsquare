@@ -1,8 +1,6 @@
 package com.pragma.powerup.usermicroservice.adapters.driving.http.dto.response;
 
-import com.pragma.powerup.usermicroservice.domain.model.Category;
-import com.pragma.powerup.usermicroservice.domain.model.Restaurant;
-import jakarta.validation.constraints.NotBlank;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +11,7 @@ import lombok.Setter;
 public class ListPlateResponseDto {
 
     private String name;
-    private Category category;
+    private Long id_category;
     private String description;
     private Double price;
     private String url_image;
