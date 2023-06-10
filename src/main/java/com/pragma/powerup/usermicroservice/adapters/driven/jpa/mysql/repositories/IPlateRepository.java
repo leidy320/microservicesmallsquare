@@ -12,5 +12,7 @@ public interface IPlateRepository extends JpaRepository<PlateEntity, Long> {
     Optional<PlateEntity> findById(Long id);
     Page<PlateEntity> findByCategoryIdAndRestaurantIdAndActiveTrue(Long idCategory, Long idRestaurant, Pageable pageable);
 
+
+    PlateEntity findByIdAndRestaurantId(long id, long idRestaurant);
 }
 

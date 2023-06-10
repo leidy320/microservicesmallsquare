@@ -15,11 +15,10 @@ import java.util.List;
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface IPlateEntityMapper {
 
-    //@Mapping(target = "category.id", source = "category.id")
-    //@Mapping(target = "restaurant.id", source = "restaurant.id")
+
     PlateEntity toEntity(Plate plate);
-    //@Mapping(target = "category.id", source = "category.id")
-    //@Mapping(target = "restaurant.id", source = "restaurant.id")
     List<Plate> toListPlate(List<PlateEntity> Plates);
+    Plate toPlate(PlateEntity plateEntity);
+
 }
 

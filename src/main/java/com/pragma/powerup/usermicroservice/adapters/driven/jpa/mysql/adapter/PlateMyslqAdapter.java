@@ -9,11 +9,9 @@ import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.repositorie
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.repositories.IRestaurantRepository;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.mapper.ICategoryRequestMapper;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidatePlateException;
-import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateRestaurantException;
 import com.pragma.powerup.usermicroservice.domain.model.Category;
 import com.pragma.powerup.usermicroservice.domain.model.Plate;
 import com.pragma.powerup.usermicroservice.domain.spi.IPlatePersistencePort;
-import jakarta.xml.bind.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -85,4 +83,20 @@ public class PlateMyslqAdapter implements IPlatePersistencePort {
         }
         return plateEntityMapper.toListPlate(plateEntities);
     }
+
+    @Override
+    public Plate getPlateById(Long id) throws ValidatePlateException {
+        Optional<PlateEntity> plateEntityFound = plateRepository.findById(id);
+        if(plateEntityFound.isEmpty()){
+            throw new ValidatePlateException("no se encontro plato con ese id");
+        }
+        return plateEntityMapper.toPlate(plateEntityFound.get());
+    }
+
+    @Override
+    public Plate findByIdAndIdRestaurant(long id, long idRestaurant) {
+        return plateEntityMapper.toPlate( plateRepository.findByIdAndRestaurantId(id, idRestaurant));
+    }
+
+
 }

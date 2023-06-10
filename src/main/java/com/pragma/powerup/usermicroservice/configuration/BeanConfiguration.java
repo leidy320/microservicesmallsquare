@@ -1,23 +1,18 @@
 package com.pragma.powerup.usermicroservice.configuration;
 
-import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.adapter.CategoryMyslqAdapter;
-import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.adapter.PlateMyslqAdapter;
-import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.adapter.RestaurantMysqlAdapter;
-import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.adapter.UserRestaurantMysqlAdapter;
+import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.adapter.*;
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.mappers.IPlateEntityMapper;
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.mappers.IRestaurantEntityMapper;
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.mappers.IUserRestaurantEntityMapper;
-import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.repositories.ICategoryRepository;
-import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.repositories.IPlateRepository;
-import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.repositories.IRestaurantRepository;
-import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.repositories.IUserRestaurantRepository;
+import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.mappers.OrderPlateEntityMapper;
+import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.repositories.*;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.mapper.ICategoryRequestMapper;
+import com.pragma.powerup.usermicroservice.adapters.driving.http.mapper.IOrderRequestMapper;
+import com.pragma.powerup.usermicroservice.domain.api.IOrderServicePort;
 import com.pragma.powerup.usermicroservice.domain.api.IPlateServicePort;
 import com.pragma.powerup.usermicroservice.domain.api.IRestaurantServicePort;
-import com.pragma.powerup.usermicroservice.domain.spi.ICategoryPersistencePort;
-import com.pragma.powerup.usermicroservice.domain.spi.IPlatePersistencePort;
-import com.pragma.powerup.usermicroservice.domain.spi.IRestaurantPersistencePort;
-import com.pragma.powerup.usermicroservice.domain.spi.IUserRestaurantPersistencePort;
+import com.pragma.powerup.usermicroservice.domain.spi.*;
+import com.pragma.powerup.usermicroservice.domain.usecase.OrderUseCase;
 import com.pragma.powerup.usermicroservice.domain.usecase.PlateUseCase;
 import com.pragma.powerup.usermicroservice.domain.usecase.RestaurantUseCase;
 import lombok.RequiredArgsConstructor;
@@ -36,13 +31,19 @@ public class BeanConfiguration {
     private final IUserRestaurantEntityMapper userRestaurantEntityMapper;
     private final ICategoryRepository categoryRepository;
     private final ICategoryRequestMapper categoryRequestMapper;
-
+    private final IOrderRequestMapper orderRequestMapper;
+    private final IOrderRepository orderRepository;
+    private final IOrderPlateRepository orderPlateRepository;
+    private final OrderPlateEntityMapper orderPlateEntityMapper;
 
     @Bean
     public IRestaurantServicePort restaurantServicePort(){return new RestaurantUseCase(restaurantPersistencePort(), userRestaurantPersistencePort());
     }
     @Bean
     public IPlateServicePort plateServicePort(){return new PlateUseCase(platePersistencePort(), categoryPersistencePort());
+    }
+    @Bean
+    public IOrderServicePort orderServicePort(){return new OrderUseCase(orderPersistencePort(),platePersistencePort(),orderPllatePersistencePort()) ;
     }
 
     @Bean
@@ -61,5 +62,13 @@ public class BeanConfiguration {
     @Bean
     public ICategoryPersistencePort categoryPersistencePort() {
         return new CategoryMyslqAdapter(categoryRepository, categoryRequestMapper);
+    }
+    @Bean
+    public IOrderPersistencePort orderPersistencePort() {
+        return new OrderMysqlAdapter(orderRequestMapper, orderRepository);
+    }
+    @Bean
+    public IOrderPllatePersistencePort orderPllatePersistencePort() {
+        return new OrderPlateMysqlAdapter(orderPlateRepository, orderPlateEntityMapper);
     }
 }

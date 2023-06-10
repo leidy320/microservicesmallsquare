@@ -35,6 +35,7 @@ public class RestaurantMysqlAdapter implements IRestaurantPersistencePort {
     }
 
 
+    @Override
     public List<Restaurant> getRestaurant(int page, int pageSize) throws ValidateRestaurantException {
 
         Sort sort= Sort.by(Sort.Direction.ASC,"name");
@@ -47,4 +48,9 @@ public class RestaurantMysqlAdapter implements IRestaurantPersistencePort {
         }
         return restaurantEntityMapper.toListRestaurant(restaurantEntities);
     }
+
+    /*@Override
+    public Restaurant GetRestaurantByIdAndIdOwner(Long id, Long id_owner) {
+        return restaurantEntityMapper.toRestaurant(restaurantRepository.findByIdAndIdOwner(id, id_owner));
+    }*/
 }
