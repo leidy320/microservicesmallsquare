@@ -3,6 +3,7 @@ package com.pragma.powerup.usermicroservice.domain.usecase;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.OrderPlateRequestDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.OrderRequestDto;
 import com.pragma.powerup.usermicroservice.domain.api.IOrderServicePort;
+import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateOrderException;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidatePlateException;
 import com.pragma.powerup.usermicroservice.domain.model.Order;
 import com.pragma.powerup.usermicroservice.domain.model.OrderPlate;
@@ -28,9 +29,9 @@ public class OrderUseCase implements IOrderServicePort {
     }
 
     @Override
-    public void saveOrder(Order order, OrderRequestDto orderRequestDto) throws ValidatePlateException {
+    public void saveOrder(Order order, OrderRequestDto orderRequestDto) throws ValidatePlateException, ValidateOrderException {
         Restaurant restaurant= validateIfExistsPlateInRestaurant(orderRequestDto);
-
+        validateOrdersStatus(order.getIdClient());
         order.setStatus("PENDIENTE");
         order.setDate(new Date());
         order.setRestaurant(restaurant);
@@ -58,5 +59,8 @@ public class OrderUseCase implements IOrderServicePort {
         }
         return plate.getRestaurant();
         
+    }
+    private  void validateOrdersStatus(Long idClient) throws ValidateOrderException {
+         orderPersistencePort.findByIdClientAndStatus(idClient);
     }
 }
