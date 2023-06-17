@@ -43,7 +43,7 @@ public class RestaurantRestController {
     }
 
     @SecurityRequirement(name = "jwt")
-    @PostMapping("Employe")
+    @PostMapping("employe")
     public ResponseEntity<Map<String, String>> addEmployeToRestaurant(@RequestBody EmployeRestaurantRequestDto employeRestaurantRequestDto, @RequestHeader HttpHeaders headers) throws ValidateRestaurantException {
         String token = headers.getFirst("authorization");
         restaurantHandler.addEmployeToRestaurant(employeRestaurantRequestDto, token);

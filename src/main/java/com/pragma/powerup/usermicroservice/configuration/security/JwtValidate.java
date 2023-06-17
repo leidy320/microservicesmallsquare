@@ -21,8 +21,9 @@ public class JwtValidate {
     public JwtValidate() {
         rolePermissions = new HashMap<>();
         rolePermissions.put("ROLE_ADMIN", Arrays.asList("/restaurant/add"));
-        rolePermissions.put("ROLE_OWNER", Arrays.asList("/plate/**","/restaurant/addemploye"));
-        rolePermissions.put("ROLE_CUSTOMER", Arrays.asList("/restaurant/list","/plate/list","/order/create"));
+        rolePermissions.put("ROLE_OWNER", Arrays.asList("/plate/**","/restaurant/employe"));
+        rolePermissions.put("ROLE_CUSTOMER", Arrays.asList("/restaurant/list","/plate/list","/order/**"));
+        rolePermissions.put("ROLE_EMPLOYE", Arrays.asList("/order/**"));
     }
 
     public boolean validateToken(String token) {

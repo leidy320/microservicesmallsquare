@@ -1,13 +1,17 @@
 package com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.adapter;
 
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.entity.RestaurantEntity;
+import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.entity.UserRestaurantEntity;
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.mappers.IRestaurantEntityMapper;
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.mappers.IUserRestaurantEntityMapper;
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.repositories.IRestaurantRepository;
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.repositories.IUserRestaurantRepository;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.EmployeRestaurantRequestDto;
+import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateOrderException;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateRestaurantException;
+import com.pragma.powerup.usermicroservice.domain.model.OrderPlate;
 import com.pragma.powerup.usermicroservice.domain.model.Restaurant;
+import com.pragma.powerup.usermicroservice.domain.model.UserRestaurant;
 import com.pragma.powerup.usermicroservice.domain.spi.IUserRestaurantPersistencePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -33,4 +37,15 @@ public class UserRestaurantMysqlAdapter implements IUserRestaurantPersistencePor
         }
         userRestaurantRepository.save(userRestaurantEntityMapper.toEntity(employeRestaurantRequestDto));
     }
+
+    @Override
+    public UserRestaurant getUserRestaurantByIdEmploye(Long idEmployee) throws ValidateOrderException {
+        UserRestaurantEntity userRestaurantEntity= userRestaurantRepository.findByIdUser(idEmployee);
+        if (userRestaurantEntity == null) {
+            throw new ValidateOrderException("No existe un restaurante asociado a ese id empleado");
+        }
+        return userRestaurantEntityMapper.toUserRestaurant(userRestaurantEntity);
+    }
+
+
 }

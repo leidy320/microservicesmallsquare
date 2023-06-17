@@ -6,4 +6,6 @@ public interface IOrderPllatePersistencePort {
 
     void saveOrderPlate(OrderPlate orderPlate);
 
+
+
 }

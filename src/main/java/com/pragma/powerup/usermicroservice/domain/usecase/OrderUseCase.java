@@ -5,27 +5,29 @@ import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.Ord
 import com.pragma.powerup.usermicroservice.domain.api.IOrderServicePort;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateOrderException;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidatePlateException;
-import com.pragma.powerup.usermicroservice.domain.model.Order;
-import com.pragma.powerup.usermicroservice.domain.model.OrderPlate;
-import com.pragma.powerup.usermicroservice.domain.model.Plate;
-import com.pragma.powerup.usermicroservice.domain.model.Restaurant;
+import com.pragma.powerup.usermicroservice.domain.model.*;
 import com.pragma.powerup.usermicroservice.domain.spi.IOrderPersistencePort;
 import com.pragma.powerup.usermicroservice.domain.spi.IOrderPllatePersistencePort;
 import com.pragma.powerup.usermicroservice.domain.spi.IPlatePersistencePort;
+import com.pragma.powerup.usermicroservice.domain.spi.IUserRestaurantPersistencePort;
 
 import java.util.Date;
+import java.util.List;
 
 public class OrderUseCase implements IOrderServicePort {
     private final IOrderPersistencePort orderPersistencePort;
     private final IPlatePersistencePort platePersistencePort;
     private final IOrderPllatePersistencePort orderPllatePersistencePort;
 
+    private  final IUserRestaurantPersistencePort userRestaurantPersistencePort;
 
 
-    public OrderUseCase(IOrderPersistencePort orderPersistencePort, IPlatePersistencePort platePersistencePort, IOrderPllatePersistencePort orderPllatePersistencePort) {
+
+    public OrderUseCase(IOrderPersistencePort orderPersistencePort, IPlatePersistencePort platePersistencePort, IOrderPllatePersistencePort orderPllatePersistencePort, IUserRestaurantPersistencePort userRestaurantPersistencePort) {
         this.orderPersistencePort = orderPersistencePort;
         this.platePersistencePort = platePersistencePort;
         this.orderPllatePersistencePort = orderPllatePersistencePort;
+        this.userRestaurantPersistencePort = userRestaurantPersistencePort;
     }
 
     @Override
@@ -40,6 +42,12 @@ public class OrderUseCase implements IOrderServicePort {
         OrderPlate orderPlate = new OrderPlate();
         orderPlate.setOrder(orderSaved);
         saveOrderPlate(orderRequestDto, orderPlate);
+    }
+
+    @Override
+    public List<Order> getOrderByIdRestaurant(Long idEmployee, int page, int pagesize, String status) throws ValidateOrderException {
+        UserRestaurant userRestaurant =  userRestaurantPersistencePort.getUserRestaurantByIdEmploye(idEmployee);
+        return orderPersistencePort.getOrderByIdRestaurant(userRestaurant.getIdRestaurant(),  page,  pagesize,  status);
     }
 
     private void saveOrderPlate(OrderRequestDto orderRequestDto, OrderPlate orderPlate) throws ValidatePlateException {

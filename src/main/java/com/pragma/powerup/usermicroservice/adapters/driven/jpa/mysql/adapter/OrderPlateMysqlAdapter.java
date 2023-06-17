@@ -17,4 +17,6 @@ public class OrderPlateMysqlAdapter implements IOrderPllatePersistencePort {
         orderPlateRepository.save(plateEntityMapper.toOrderPlateEntity(orderPlate));
     }
 
+
+
 }

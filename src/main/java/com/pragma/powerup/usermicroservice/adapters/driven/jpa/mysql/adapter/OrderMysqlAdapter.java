@@ -1,12 +1,18 @@
 package com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.adapter;
 
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.entity.OrderEntity;
+import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.entity.PlateEntity;
+import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.mappers.IOrderEntityMapper;
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.repositories.IOrderRepository;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.mapper.IOrderRequestMapper;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateOrderException;
+import com.pragma.powerup.usermicroservice.domain.exceptions.ValidatePlateException;
 import com.pragma.powerup.usermicroservice.domain.model.Order;
 import com.pragma.powerup.usermicroservice.domain.spi.IOrderPersistencePort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +25,7 @@ public class OrderMysqlAdapter implements IOrderPersistencePort {
 
     private final IOrderRequestMapper orderRequestMapper;
     private final IOrderRepository orderRepository;
-
+    private  final IOrderEntityMapper orderEntityMapper;
     @Override
     public Order saveOrder(Order order) {
         OrderEntity orderEntity = orderRepository.save(orderRequestMapper.toOrderEntity(order));
@@ -33,6 +39,16 @@ public class OrderMysqlAdapter implements IOrderPersistencePort {
         if(findByIdAndValidateStatus.isPresent()){
             throw new ValidateOrderException("ya hay otro pedido por este cliente");
         }
+    }
+
+    @Override
+    public List<Order> getOrderByIdRestaurant(Long idRestaurant, int page, int pagesize, String status) throws ValidateOrderException {
+        Sort sort= Sort.by(Sort.Direction.ASC,"status");
+        Pageable pageable = PageRequest.of(page,pagesize,sort);
+
+
+        List<OrderEntity> orderEntities = orderRepository.findByStatusAndRestaurantId(status, idRestaurant, pageable).toList();
+        return orderEntityMapper.toListOrder(orderEntities);
     }
 
 }

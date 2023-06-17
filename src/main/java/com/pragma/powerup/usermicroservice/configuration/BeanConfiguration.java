@@ -1,10 +1,7 @@
 package com.pragma.powerup.usermicroservice.configuration;
 
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.adapter.*;
-import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.mappers.IPlateEntityMapper;
-import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.mappers.IRestaurantEntityMapper;
-import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.mappers.IUserRestaurantEntityMapper;
-import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.mappers.OrderPlateEntityMapper;
+import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.mappers.*;
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.repositories.*;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.mapper.ICategoryRequestMapper;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.mapper.IOrderRequestMapper;
@@ -35,6 +32,7 @@ public class BeanConfiguration {
     private final IOrderRepository orderRepository;
     private final IOrderPlateRepository orderPlateRepository;
     private final OrderPlateEntityMapper orderPlateEntityMapper;
+    private  final IOrderEntityMapper orderEntityMapper;
 
     @Bean
     public IRestaurantServicePort restaurantServicePort(){return new RestaurantUseCase(restaurantPersistencePort(), userRestaurantPersistencePort());
@@ -43,7 +41,7 @@ public class BeanConfiguration {
     public IPlateServicePort plateServicePort(){return new PlateUseCase(platePersistencePort(), categoryPersistencePort());
     }
     @Bean
-    public IOrderServicePort orderServicePort(){return new OrderUseCase(orderPersistencePort(),platePersistencePort(),orderPllatePersistencePort()) ;
+    public IOrderServicePort orderServicePort(){return new OrderUseCase(orderPersistencePort(),platePersistencePort(),orderPllatePersistencePort(), userRestaurantPersistencePort()) ;
     }
 
     @Bean
@@ -65,10 +63,11 @@ public class BeanConfiguration {
     }
     @Bean
     public IOrderPersistencePort orderPersistencePort() {
-        return new OrderMysqlAdapter(orderRequestMapper, orderRepository);
+        return new OrderMysqlAdapter(orderRequestMapper, orderRepository,orderEntityMapper);
     }
     @Bean
     public IOrderPllatePersistencePort orderPllatePersistencePort() {
         return new OrderPlateMysqlAdapter(orderPlateRepository, orderPlateEntityMapper);
     }
+
 }

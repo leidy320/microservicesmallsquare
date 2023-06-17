@@ -46,7 +46,7 @@ public class RestaurantHandlerImpl implements IRestaurantHandler {
         String idUSer = tokenUtils.getIdByToken(token);
         employeRestaurantRequestDto.setIdOwner(Long.valueOf(idUSer));
         String role = userRestTemplate.getRoleByIdUSer(employeRestaurantRequestDto.getIdOwner().toString(), token);
-        if(role.equals(Constants.EMPLOYE)) {
+        if(role.equals(Constants.OWNER)) {
             restaurantServicePort.addEmployeToRestaurant(employeRestaurantRequestDto);
         }
         else  {

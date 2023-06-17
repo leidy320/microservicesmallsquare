@@ -6,7 +6,10 @@ import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateOrderExcept
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidatePlateException;
 import com.pragma.powerup.usermicroservice.domain.model.Order;
 
+import java.util.List;
+
 
 public interface IOrderServicePort {
     void saveOrder(Order order, OrderRequestDto orderRequestDto) throws ValidatePlateException, ValidateOrderException;
+    List<Order> getOrderByIdRestaurant(Long idEmployee, int page, int pagesize, String status) throws ValidateOrderException;
 }
