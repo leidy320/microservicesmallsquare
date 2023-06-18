@@ -37,4 +37,5 @@ public class Constants {
     public  static  final  String RESTAURANT_CREATED_MESSAGE ="Restaurant created successfully";
     public  static  final  String PLATE_CREATED_MESSAGE ="Plate created successfully";
     public  static  final  String EMPLOYE_ADDRESTAURANT_MESSAGE ="Employe add to restaurant";
+    public  static  final  String ORDER_ASSING_MESSAGE ="Order assing";
 }

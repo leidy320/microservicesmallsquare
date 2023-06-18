@@ -1,5 +1,6 @@
 package com.pragma.powerup.usermicroservice.domain.usecase;
 
+import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.OrdersToAssing;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.OrderPlateRequestDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.OrderRequestDto;
 import com.pragma.powerup.usermicroservice.domain.api.IOrderServicePort;
@@ -17,16 +18,16 @@ import java.util.List;
 public class OrderUseCase implements IOrderServicePort {
     private final IOrderPersistencePort orderPersistencePort;
     private final IPlatePersistencePort platePersistencePort;
-    private final IOrderPllatePersistencePort orderPllatePersistencePort;
+    private final IOrderPllatePersistencePort orderPlatePersistencePort;
 
     private  final IUserRestaurantPersistencePort userRestaurantPersistencePort;
 
 
 
-    public OrderUseCase(IOrderPersistencePort orderPersistencePort, IPlatePersistencePort platePersistencePort, IOrderPllatePersistencePort orderPllatePersistencePort, IUserRestaurantPersistencePort userRestaurantPersistencePort) {
+    public OrderUseCase(IOrderPersistencePort orderPersistencePort, IPlatePersistencePort platePersistencePort, IOrderPllatePersistencePort orderPlatePersistencePort, IUserRestaurantPersistencePort userRestaurantPersistencePort) {
         this.orderPersistencePort = orderPersistencePort;
         this.platePersistencePort = platePersistencePort;
-        this.orderPllatePersistencePort = orderPllatePersistencePort;
+        this.orderPlatePersistencePort = orderPlatePersistencePort;
         this.userRestaurantPersistencePort = userRestaurantPersistencePort;
     }
 
@@ -50,12 +51,23 @@ public class OrderUseCase implements IOrderServicePort {
         return orderPersistencePort.getOrderByIdRestaurant(userRestaurant.getIdRestaurant(),  page,  pagesize,  status);
     }
 
+    @Override
+    public void assingEmployeeToOrder(List<OrdersToAssing> ordersToAssing, Long idEmployee) throws ValidateOrderException {
+        UserRestaurant userRestaurant =  userRestaurantPersistencePort.getUserRestaurantByIdEmploye(idEmployee);
+        for(OrdersToAssing oneOrdersToAssing : ordersToAssing) {
+            Order order = orderPersistencePort.findByIdAndRestaurantId(oneOrdersToAssing.getIdOrder(), userRestaurant.getIdRestaurant());
+            order.setIdChef(idEmployee);
+            order.setStatus("EN_PREPARACION");
+            orderPersistencePort.assingEmployee(order);
+        }
+    }
+
     private void saveOrderPlate(OrderRequestDto orderRequestDto, OrderPlate orderPlate) throws ValidatePlateException {
         for(OrderPlateRequestDto orderPlateRequestDTO : orderRequestDto.getListplates()) {
             Plate plate = platePersistencePort.getPlateById(orderPlateRequestDTO.getId_plate());
             orderPlate.setPlate(plate);
             orderPlate.setQuantity(orderPlateRequestDTO.getQuantity());
-            orderPllatePersistencePort.saveOrderPlate(orderPlate);
+            orderPlatePersistencePort.saveOrderPlate(orderPlate);
         }
     }
 

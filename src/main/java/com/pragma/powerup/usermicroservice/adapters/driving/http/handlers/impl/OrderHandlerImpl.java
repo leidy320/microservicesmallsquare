@@ -1,5 +1,6 @@
 package com.pragma.powerup.usermicroservice.adapters.driving.http.handlers.impl;
 
+import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.OrdersToAssing;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.OrderRequestDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.response.ListOrderResponseDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.handlers.IOrderHandler;
@@ -39,5 +40,11 @@ public class OrderHandlerImpl implements IOrderHandler {
         List<ListOrderResponseDto> listOrderResponseDtos = orderRequestMapper.toListOrderResponseDto( orderlist);
 
         return  listOrderResponseDtos;
+    }
+
+    @Override
+    public void assingEmployeeToOrder(List<OrdersToAssing> ordersToAssing, String token) throws ValidateOrderException {
+        Long idEmployee = Long.valueOf(tokenUtils.getIdByToken(token));
+        orderServicePort.assingEmployeeToOrder(ordersToAssing, idEmployee);
     }
 }

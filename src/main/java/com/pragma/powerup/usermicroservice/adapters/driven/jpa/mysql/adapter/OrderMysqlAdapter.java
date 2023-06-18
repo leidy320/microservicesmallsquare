@@ -51,4 +51,21 @@ public class OrderMysqlAdapter implements IOrderPersistencePort {
         return orderEntityMapper.toListOrder(orderEntities);
     }
 
+    @Override
+    public Order findByIdAndRestaurantId(Long id, Long restaurantId) throws ValidateOrderException {
+        Optional<OrderEntity> orderEntity = orderRepository.findByIdAndRestaurantId(id, restaurantId);
+
+        if(!orderEntity.isPresent()){
+            throw new ValidateOrderException("No se encontro una orden asociada a ese idRestaurant");
+        }
+
+        return orderEntityMapper.toOrder(orderEntity.get());
+    }
+
+    @Override
+    public void assingEmployee(Order order) throws ValidateOrderException {
+        OrderEntity orderEntity = orderRequestMapper.toOrderEntity(order);
+        orderRepository.save(orderEntity);
+    }
+
 }

@@ -1,13 +1,10 @@
 package com.pragma.powerup.usermicroservice.adapters.driving.http.controller;
 
+import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.OrdersToAssing;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.OrderRequestDto;
-import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.PlateRequestDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.response.ListOrderResponseDto;
-import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.response.ListPlateResponseDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.handlers.IOrderHandler;
-import com.pragma.powerup.usermicroservice.adapters.driving.http.handlers.IPlateHandler;
 import com.pragma.powerup.usermicroservice.configuration.Constants;
-import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateCategoryException;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateOrderException;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidatePlateException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -53,5 +50,15 @@ public class OrderController {
         String token = headers.getFirst("authorization");
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(orderHandler.getOrderByIdRestaurant(token, page, pageSize, status));
+    }
+
+    @SecurityRequirement(name = "jwt")
+    @PostMapping("assing-employee")
+    public ResponseEntity<Map<String, String>> assingEmployeeToOrder(@RequestBody List<OrdersToAssing> ordersToAssing,
+                                                        @RequestHeader HttpHeaders headers) throws ValidateOrderException {
+        String token = headers.getFirst("authorization");
+        orderHandler.assingEmployeeToOrder(ordersToAssing, token);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY, Constants.ORDER_ASSING_MESSAGE));
     }
 }
