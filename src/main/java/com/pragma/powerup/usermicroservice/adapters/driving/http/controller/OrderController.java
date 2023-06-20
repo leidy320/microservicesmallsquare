@@ -1,5 +1,6 @@
 package com.pragma.powerup.usermicroservice.adapters.driving.http.controller;
 
+import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.OrderFinishDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.OrdersToAssing;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.OrderRequestDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.response.ListOrderResponseDto;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
 @RestController
 @RequestMapping("/order/")
 @RequiredArgsConstructor
@@ -60,5 +62,12 @@ public class OrderController {
         orderHandler.assingEmployeeToOrder(ordersToAssing, token);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY, Constants.ORDER_ASSING_MESSAGE));
+    }
+    @SecurityRequirement(name = "jwt")
+    @PostMapping("finish")
+    public ResponseEntity<String> orderfinish(@RequestBody OrderFinishDto orderFinishDto) throws ValidateOrderException {
+       orderHandler.notifyToClientOrderFinish(orderFinishDto);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("pedido en finish");
     }
 }

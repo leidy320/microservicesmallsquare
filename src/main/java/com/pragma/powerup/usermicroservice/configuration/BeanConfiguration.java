@@ -8,6 +8,7 @@ import com.pragma.powerup.usermicroservice.adapters.driving.http.mapper.IOrderRe
 import com.pragma.powerup.usermicroservice.domain.api.IOrderServicePort;
 import com.pragma.powerup.usermicroservice.domain.api.IPlateServicePort;
 import com.pragma.powerup.usermicroservice.domain.api.IRestaurantServicePort;
+import com.pragma.powerup.usermicroservice.domain.apirest.IUserRestTemplate;
 import com.pragma.powerup.usermicroservice.domain.spi.*;
 import com.pragma.powerup.usermicroservice.domain.usecase.OrderUseCase;
 import com.pragma.powerup.usermicroservice.domain.usecase.PlateUseCase;
@@ -33,15 +34,18 @@ public class BeanConfiguration {
     private final IOrderPlateRepository orderPlateRepository;
     private final OrderPlateEntityMapper orderPlateEntityMapper;
     private  final IOrderEntityMapper orderEntityMapper;
+   private final IUserRestTemplate userRestTemplate;
 
     @Bean
-    public IRestaurantServicePort restaurantServicePort(){return new RestaurantUseCase(restaurantPersistencePort(), userRestaurantPersistencePort());
+    public IRestaurantServicePort restaurantServicePort(){return new RestaurantUseCase(restaurantPersistencePort(),
+            userRestaurantPersistencePort());
     }
     @Bean
     public IPlateServicePort plateServicePort(){return new PlateUseCase(platePersistencePort(), categoryPersistencePort());
     }
     @Bean
-    public IOrderServicePort orderServicePort(){return new OrderUseCase(orderPersistencePort(),platePersistencePort(),orderPllatePersistencePort(), userRestaurantPersistencePort()) ;
+    public IOrderServicePort orderServicePort(){return new OrderUseCase(orderPersistencePort(),
+            platePersistencePort(),orderPllatePersistencePort(), userRestaurantPersistencePort(), userRestTemplate) ;
     }
 
     @Bean

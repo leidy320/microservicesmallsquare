@@ -1,9 +1,11 @@
 package com.pragma.powerup.usermicroservice.domain.usecase;
 
+import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.OrderFinishDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.OrdersToAssing;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.OrderPlateRequestDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.OrderRequestDto;
 import com.pragma.powerup.usermicroservice.domain.api.IOrderServicePort;
+import com.pragma.powerup.usermicroservice.domain.apirest.IUserRestTemplate;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateOrderException;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidatePlateException;
 import com.pragma.powerup.usermicroservice.domain.model.*;
@@ -11,6 +13,12 @@ import com.pragma.powerup.usermicroservice.domain.spi.IOrderPersistencePort;
 import com.pragma.powerup.usermicroservice.domain.spi.IOrderPllatePersistencePort;
 import com.pragma.powerup.usermicroservice.domain.spi.IPlatePersistencePort;
 import com.pragma.powerup.usermicroservice.domain.spi.IUserRestaurantPersistencePort;
+import com.twilio.Twilio;
+import com.twilio.converter.Promoter;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+import java.net.URI;
+import java.math.BigDecimal;
 
 import java.util.Date;
 import java.util.List;
@@ -22,13 +30,14 @@ public class OrderUseCase implements IOrderServicePort {
 
     private  final IUserRestaurantPersistencePort userRestaurantPersistencePort;
 
+    private  final IUserRestTemplate userRestTemplate;
 
-
-    public OrderUseCase(IOrderPersistencePort orderPersistencePort, IPlatePersistencePort platePersistencePort, IOrderPllatePersistencePort orderPlatePersistencePort, IUserRestaurantPersistencePort userRestaurantPersistencePort) {
+    public OrderUseCase(IOrderPersistencePort orderPersistencePort, IPlatePersistencePort platePersistencePort, IOrderPllatePersistencePort orderPlatePersistencePort, IUserRestaurantPersistencePort userRestaurantPersistencePort, IUserRestTemplate userRestTemplate) {
         this.orderPersistencePort = orderPersistencePort;
         this.platePersistencePort = platePersistencePort;
         this.orderPlatePersistencePort = orderPlatePersistencePort;
         this.userRestaurantPersistencePort = userRestaurantPersistencePort;
+        this.userRestTemplate = userRestTemplate;
     }
 
     @Override
@@ -60,6 +69,30 @@ public class OrderUseCase implements IOrderServicePort {
             order.setStatus("EN_PREPARACION");
             orderPersistencePort.assingEmployee(order);
         }
+    }
+
+    @Override
+    public void notifyToClientOrderFinish(OrderFinishDto orderFinishDto) throws ValidateOrderException {
+       Order order = orderPersistencePort.findByid(orderFinishDto.getIdOrder());
+       if(order == null)
+       {
+           throw  new ValidateOrderException("no se encontro un plato con ese id");
+       }
+       order.setStatus("LISTO");
+       orderPersistencePort.saveOrder(order);
+       String phone= userRestTemplate.getPhoneById(order.getIdClient());
+        // Find your Account Sid and Token at twilio.com/console
+        final String ACCOUNT_SID = "AC2eb684b8699595e3f5ad7b157f318f74";
+        final String AUTH_TOKEN = "51a2715fa8bc50413ef5ba942f1885ed";
+
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        Message message = Message.creator(
+                new com.twilio.type.PhoneNumber(phone),
+                new com.twilio.type.PhoneNumber("+14065055994"),
+                "pedido listo").create();
+        System.out.println(message.getSid());
+
+
     }
 
     private void saveOrderPlate(OrderRequestDto orderRequestDto, OrderPlate orderPlate) throws ValidatePlateException {

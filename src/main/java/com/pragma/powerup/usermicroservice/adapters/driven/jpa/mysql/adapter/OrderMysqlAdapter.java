@@ -68,4 +68,9 @@ public class OrderMysqlAdapter implements IOrderPersistencePort {
         orderRepository.save(orderEntity);
     }
 
+    @Override
+    public Order findByid(Long id) {
+        return orderEntityMapper.toOrder(orderRepository.findById(id).get());
+    }
+
 }

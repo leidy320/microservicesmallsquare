@@ -1,5 +1,6 @@
 package com.pragma.powerup.usermicroservice.adapters.driving.http.handlers.impl;
 
+import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.OrderFinishDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.OrdersToAssing;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.OrderRequestDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.response.ListOrderResponseDto;
@@ -8,6 +9,7 @@ import com.pragma.powerup.usermicroservice.adapters.driving.http.handlers.IToken
 import com.pragma.powerup.usermicroservice.adapters.driving.http.mapper.IOrderRequestMapper;
 import com.pragma.powerup.usermicroservice.domain.api.IOrderServicePort;
 
+import com.pragma.powerup.usermicroservice.domain.apirest.IUserRestTemplate;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidateOrderException;
 import com.pragma.powerup.usermicroservice.domain.exceptions.ValidatePlateException;
 import com.pragma.powerup.usermicroservice.domain.model.Order;
@@ -22,6 +24,7 @@ public class OrderHandlerImpl implements IOrderHandler {
     private final IOrderServicePort orderServicePort;
     private final ITokenUtils tokenUtils;
     private  final IOrderRequestMapper orderRequestMapper;
+
     @Override
     public void saveOrder(OrderRequestDto orderRequestDto, String token) throws ValidatePlateException, ValidateOrderException {
         Order order = new Order();
@@ -46,5 +49,11 @@ public class OrderHandlerImpl implements IOrderHandler {
     public void assingEmployeeToOrder(List<OrdersToAssing> ordersToAssing, String token) throws ValidateOrderException {
         Long idEmployee = Long.valueOf(tokenUtils.getIdByToken(token));
         orderServicePort.assingEmployeeToOrder(ordersToAssing, idEmployee);
+    }
+
+    @Override
+    public void notifyToClientOrderFinish(OrderFinishDto orderFinishDto) throws ValidateOrderException {
+
+        orderServicePort.notifyToClientOrderFinish(orderFinishDto);
     }
 }

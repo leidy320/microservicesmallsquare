@@ -27,6 +27,14 @@ public class UserRestTemplateImpl implements IUserRestTemplate {
     }
 
     @Override
+    public String getPhoneById(Long id) {
+        ResponseEntity<String> response = restTemplate
+                .exchange(microserviceUserUrl+"/user/getPhone/"+id, HttpMethod.GET, null, String.class);
+        return response.getBody();
+    }
+
+
+    @Override
     public Object getUserBYDni(String dni) {
         return null;
     }

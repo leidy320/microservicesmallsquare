@@ -17,4 +17,6 @@ public interface IOrderPersistencePort {
     Order findByIdAndRestaurantId(Long id, Long restaurantId) throws ValidateOrderException;
     void assingEmployee(Order order) throws ValidateOrderException;
 
+    Order findByid(Long id);
+
 }
